@@ -17,6 +17,95 @@ A on-chain batch transfer executor for ERC-20 tokens and native chain currency. 
 - **Deploy and verify tooling** — Scripts with constructor-aware verify command output
 - **Test coverage** — Automated tests for token batch, native batch, validation, and recipient limits
 
+## Commands
+
+Copy `env.example` to `.env` and fill in your RPC URLs, private key, and API keys before deploy or verify.
+
+### Setup
+
+```shell
+npm install
+```
+
+### Compile
+
+```shell
+npm run compile
+```
+
+### Test
+
+```shell
+npm test
+```
+
+Gas report during tests:
+
+```shell
+set REPORT_GAS=true && npm test
+```
+
+On macOS / Linux:
+
+```shell
+REPORT_GAS=true npm test
+```
+
+### Deploy
+
+BSC testnet (npm script):
+
+```shell
+npm run deploy:bscTestnet
+```
+
+BSC mainnet (npm script):
+
+```shell
+npm run deploy:bscMainnet
+```
+
+Other networks (Hardhat CLI):
+
+```shell
+npx hardhat run scripts/deploy.js --network sepolia
+npx hardhat run scripts/deploy.js --network eth
+npx hardhat run scripts/deploy.js --network bsc
+npx hardhat run scripts/deploy.js --network bscTestnet
+```
+
+After deploy, the script prints a ready-to-run verify command with the contract address and `MAX_RECIPIENTS` constructor argument.
+
+### Verify
+
+Replace `<network>`, `<contract_address>`, and `<max_recipients>` with your deploy values. `MAX_RECIPIENTS` defaults to `200` if not set in `.env`.
+
+BSC testnet / mainnet:
+
+```shell
+npx hardhat verify --network bscTestnet <contract_address> <max_recipients>
+npx hardhat verify --network bsc <contract_address> <max_recipients>
+```
+
+Example:
+
+```shell
+npx hardhat verify --network bscTestnet 0xYourContractAddress 200
+```
+
+Ethereum (requires `ETHERSCAN_API_KEY` in `hardhat.config.js`):
+
+```shell
+npx hardhat verify --network sepolia <contract_address> <max_recipients>
+npx hardhat verify --network eth <contract_address> <max_recipients>
+```
+
+### Local node (optional)
+
+```shell
+npx hardhat node
+```
+
 This document is the **project brain**: purpose, architecture, behavior, operations, and design rationale — without implementation code.
 
 ---
@@ -443,16 +532,9 @@ Tests assert **behavior and events**, not implementation internals — aligned w
 
 ## 11. Operational commands (reference)
 
-| Intent | Command |
-|--------|---------|
-| Install dependencies | `npm install` |
-| Compile contracts | `npm run compile` |
-| Run test suite | `npm test` |
-| Deploy to BSC testnet | `npm run deploy:bscTestnet` |
-| Deploy to BSC mainnet | `npm run deploy:bscMainnet` |
-| Gas report during tests | Set `REPORT_GAS=true` when running tests |
+See the **Commands** section at the top of this README for setup, compile, test, deploy, verify, and local node usage.
 
-Ensure `.env` is populated from `env.example` before any network deploy.
+Ensure `.env` is populated from `env.example` before any network deploy or contract verification.
 
 ---
 
