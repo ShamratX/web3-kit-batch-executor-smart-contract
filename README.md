@@ -2,6 +2,21 @@
 
 A on-chain batch transfer executor for ERC-20 tokens and native chain currency. One contract, one transaction: many recipients receive funds atomically from a single sender. Built for Web3 Kit / Nexus-style products that need explorer-friendly entry points, operational guardrails, and predictable gas behavior.
 
+## Features
+
+- **Single-transaction batch payouts** — Send to many recipients in one call instead of many separate transactions
+- **ERC-20 and native support** — Distribute any standard token or chain-native currency (ETH, BNB, etc.)
+- **Atomic execution** — The entire batch succeeds or reverts; no partial token transfers
+- **Explorer-friendly aliases** — Public entry points named Airdrop, MultiSender, Disperse, and Transfer for clear block explorer labels
+- **Configurable batch limits** — `maxRecipients` cap set at deploy and adjustable by the owner
+- **Emergency pause** — Owner can pause all batch operations when needed
+- **Reentrancy protection** — Every external batch function is guarded against reentrancy
+- **Safe token transfers** — Uses OpenZeppelin SafeERC20 for reliable ERC-20 handling
+- **Rich on-chain events** — Emits indexed events for token and native batches for easy indexing and analytics
+- **Multi-network ready** — Hardhat setup for Ethereum (mainnet, Sepolia) and BSC (mainnet, testnet)
+- **Deploy and verify tooling** — Scripts with constructor-aware verify command output
+- **Test coverage** — Automated tests for token batch, native batch, validation, and recipient limits
+
 This document is the **project brain**: purpose, architecture, behavior, operations, and design rationale — without implementation code.
 
 ---
